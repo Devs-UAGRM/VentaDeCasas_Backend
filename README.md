@@ -4,7 +4,7 @@
 
 ## Inicio del Proyecto
 
-- 1. Instalar Typescript de manera Gloval:
+- 1. Instalar Typescript de manera Global:
 
 ```bash
   npm install -g typescript
@@ -53,16 +53,7 @@
 - 8. Agregamos las dependencias necesarias para correr la aplicacion:
 
 ```bash
-    npm i express cors morgan body-parser dotenv @types/express @typesm
-    ongoose@^5.9.70 mongodb@^3.6.8 nodemon
-    bcryptjs@^2.4.3 jsonwebtoken@^8.5.1
-    passport@^0.4.1 passport-jwt@^4.0.0 connect
-    passport-local@^1.0.0 cookie-session@^1.4.
-    uuidv4@^8.3.2 multer@^1.4.2
-    moment@^2.29.1 dateformat@^3.0.3
-    axios@^0.21.1 swagger-ui-express@^4.1
-    class-validator@^0.13.1 class-transformer@^0.3
-    reflect-metadata@^0.1.13 typeorm@^0.2.
+    npm i express cors morgan body-parser dotenv @types/express @typesmongoose@^5.9.70 mongodb@^3.6.8 nodemon bcryptjs@^2.4.3 jsonwebtoken@^8.5.1 passport@^0.4.1 passport-jwt@^4.0.0 connect passport-local@^1.0.0 cookie-session@^1.4.  uuidv4@^8.3.2 multer@^1.4.2 moment@^2.29.1 dateformat@^3.0.3 axios@^0.21.1 wagger-ui-express@^4.1 class-validator@^0.13.1 class-transformer@^0.3 reflect-metadata@^0.1.13 typeorm@^0.2.
 ```
 
 - 8. Ejecutar la el archivo de configuracion `tslint` desde una consola que reconozca los directorios:
