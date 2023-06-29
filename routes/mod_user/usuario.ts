@@ -51,7 +51,6 @@ import { isAdminRole } from "../../middlewares/validar-rol";
  router.delete('/:id',[
     check('id').isInt().withMessage('El campo id debe ser un número entero'),
     validarJWT,
-    isAdminRole,
     validarCampos  
 ], deletState);
 

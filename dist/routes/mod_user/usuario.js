@@ -42,7 +42,6 @@ router.delete('/del/:id', [
 router.delete('/:id', [
     (0, express_validator_1.check)('id').isInt().withMessage('El campo id debe ser un número entero'),
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
     validar_campos_1.default
 ], usuario_1.deletState);
 exports.default = router;
