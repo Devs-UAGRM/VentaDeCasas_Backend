@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletState = exports.delet = exports.put = exports.post = exports.get = exports.gets = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const usuario_1 = __importDefault(require("../../models/mod_user/usuario"));
 const gets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const obj = yield usuario_1.default.findAll();
@@ -36,6 +37,9 @@ const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
         const obj = new usuario_1.default(body);
+        // Encriptar la contraseña
+        const salt = bcrypt_1.default.genSaltSync();
+        obj.password = bcrypt_1.default.hashSync(obj.password, salt);
         yield obj.save();
         res.json({
             msg: 'El Usuario se creo correctamente',
@@ -59,6 +63,11 @@ const put = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(404).json({
                 mensaje: `No existen el Usuario con ese ID`,
             });
+        }
+        if (body.password) {
+            // Encriptar la contraseña
+            const salt = bcrypt_1.default.genSaltSync();
+            body.password = bcrypt_1.default.hashSync(body.password, salt);
         }
         yield obj.update(body);
         res.json({

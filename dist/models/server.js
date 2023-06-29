@@ -16,6 +16,7 @@ exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const connnection_1 = __importDefault(require("../db/connnection"));
+const auth_1 = __importDefault(require("../routes/mod_user/auth"));
 const rol_1 = __importDefault(require("../routes/mod_user/rol"));
 const categoria_1 = __importDefault(require("../routes/mod_casas/categoria"));
 const tramite_1 = __importDefault(require("../routes/mod_tramites/tramite"));
@@ -80,6 +81,7 @@ class Server {
         this.app.use(express_1.default.static('public'));
     }
     routes() {
+        this.app.use(this.apiPaths.auth, auth_1.default);
         this.app.use(this.apiPaths.roles, rol_1.default);
         this.app.use(this.apiPaths.categoria, categoria_1.default);
         this.app.use(this.apiPaths.tramite, tramite_1.default);

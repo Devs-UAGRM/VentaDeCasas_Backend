@@ -3,6 +3,7 @@ import cors from "cors";
 
 import db from "../db/connnection";
 
+import authRoutes from "../routes/mod_user/auth";
 import rolRoutes from "../routes/mod_user/rol";
 import categoriaRoutes from "../routes/mod_casas/categoria";
 import tramiteRoutes from "../routes/mod_tramites/tramite";
@@ -76,6 +77,7 @@ export class Server {
     }
 
     routes () {
+        this.app.use(this.apiPaths.auth, authRoutes);
         this.app.use(this.apiPaths.roles, rolRoutes);
         this.app.use(this.apiPaths.categoria, categoriaRoutes);
         this.app.use(this.apiPaths.tramite, tramiteRoutes);
@@ -97,6 +99,7 @@ export class Server {
     listen () {
         this.app.listen( this.port, () => {
             console.log( 'Servidor corriendo en le puerto : ' + this.port );
+            
         })
     }
 }

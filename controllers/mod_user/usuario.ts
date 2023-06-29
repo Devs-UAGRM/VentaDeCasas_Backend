@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+
 import Usuario from "../../models/mod_user/usuario";
 
 export const gets = async ( req : Request, res : Response ) => {
@@ -22,6 +24,9 @@ export const post = async ( req : Request, res : Response ) => {
     const {body} = req;
     try {
         const obj = new Usuario(body);
+         // Encriptar la contraseña
+         const salt = bcrypt.genSaltSync();
+         obj.password = bcrypt.hashSync(obj.password, salt);
         await obj.save();
         res.json({
             msg: 'El Usuario se creo correctamente',
@@ -45,6 +50,11 @@ export const put = async ( req : Request, res : Response ) => {
             return res.status(404).json({
                 mensaje :`No existen el Usuario con ese ID`,
             })
+        }
+        if (body.password) {
+            // Encriptar la contraseña
+            const salt = bcrypt.genSaltSync();
+            body.password = bcrypt.hashSync(body.password, salt);
         }
         await obj.update(body);
         res.json({
