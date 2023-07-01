@@ -36,26 +36,26 @@ const detallpago_1 = __importDefault(require("../routes/mod_pagos/detallpago"));
 class Server {
     constructor() {
         this.apiPaths = {
-            auth: '/api/auth',
-            roles: '/api/roles',
-            categoria: '/api/categoria',
-            tramite: '/api/tramite',
-            estatram: '/api/estatram',
-            usuario: '/api/usuario',
-            bitacora: '/api/bitacora',
-            accion: '/api/accion',
-            tarjeta: '/api/tarjeta',
-            propiedad: '/api/propiedad',
-            imgprop: '/api/imgprop',
-            precio: '/api/precio',
-            compvent: '/api/compvent',
-            cuotas: '/api/cuotas',
-            detalltram: '/api/detalltram',
-            fechtram: '/api/fechtram',
-            detallpago: '/api/detallpago',
+            auth: "/api/auth",
+            roles: "/api/roles",
+            categoria: "/api/categoria",
+            tramite: "/api/tramite",
+            estatram: "/api/estatram",
+            usuario: "/api/usuario",
+            bitacora: "/api/bitacora",
+            accion: "/api/accion",
+            tarjeta: "/api/tarjeta",
+            propiedad: "/api/propiedad",
+            imgprop: "/api/imgprop",
+            precio: "/api/precio",
+            compvent: "/api/compvent",
+            cuotas: "/api/cuotas",
+            detalltram: "/api/detalltram",
+            fechtram: "/api/fechtram",
+            detallpago: "/api/detallpago",
         };
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '8000';
+        this.port = process.env.PORT || "8000";
         //    Metodos iniciales
         this.dbConnection();
         this.middlewares();
@@ -65,10 +65,10 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield connnection_1.default.authenticate();
-                console.log('Database online');
+                console.log("Database online");
             }
             catch (error) {
-                console.log('Database ofline - ' + error);
+                console.log("Database ofline - " + error);
             }
         });
     }
@@ -78,7 +78,7 @@ class Server {
         // LECTURA DEL BODY
         this.app.use(express_1.default.json());
         // CARPETA PUBLICA
-        this.app.use(express_1.default.static('public'));
+        this.app.use(express_1.default.static("public"));
     }
     routes() {
         this.app.use(this.apiPaths.auth, auth_1.default);
@@ -101,7 +101,7 @@ class Server {
     }
     listen() {
         this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en le puerto : ' + this.port);
+            console.log("Servidor corriendo en le puerto : " + this.port);
         });
     }
 }
