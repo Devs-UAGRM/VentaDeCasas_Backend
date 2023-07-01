@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-const user = encodeURIComponent(process.env.DB_USER || "postgres");
-const password = encodeURIComponent(process.env.DB_PASSWORD || "password");
-const host = encodeURIComponent(process.env.DB_HOST || "localhost");
-const port = encodeURIComponent(process.env.DB_PORT || "8000");
-const database = encodeURIComponent(process.env.DB_DATABASE || "houseSales");
+const user = encodeURIComponent(process.env.DB_USER || "");
+const password = encodeURIComponent(process.env.DB_PASSWORD || "");
+const host = encodeURIComponent(process.env.DB_HOST || "");
+const port = encodeURIComponent(process.env.DB_PORT || "");
+const database = encodeURIComponent(process.env.DB_DATABASE || "");
 const typeDatabase = "postgres";
 const url = `${typeDatabase}://${user}:${password}@${host}:${port}/${database}`;
 const options = {
