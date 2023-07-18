@@ -12,11 +12,52 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletState = exports.delet = exports.put = exports.post = exports.get = exports.gets = void 0;
+exports.deletState = exports.delet = exports.put = exports.post = exports.get = exports.gets = exports.saveBitacora = void 0;
 const bitacora_1 = __importDefault(require("../../models/mod_user/bitacora"));
+const accion_1 = __importDefault(require("../../models/mod_user/accion"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const usuario_1 = __importDefault(require("../../models/mod_user/usuario"));
+const saveBitacora = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token, accion } = data;
+    const id_usuario = yield getUserIdByToken(token);
+    const date = new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" });
+    const hora = date.split(' ')[1];
+    const bitacora = {
+        hora_ini: hora,
+        hora_fin: hora,
+        estado: true,
+        id_usuario: id_usuario,
+    };
+    try {
+        const obj = new bitacora_1.default(bitacora);
+        const bitacoraCreated = yield obj.save();
+        const newAccion = {
+            accion,
+            estado: true,
+            id_bitacora: bitacoraCreated.id
+        };
+        const accionSave = new accion_1.default(newAccion);
+        yield accionSave.save();
+        return true;
+    }
+    catch (error) {
+        console.log(error);
+        return false;
+    }
+});
+exports.saveBitacora = saveBitacora;
+const getUserIdByToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const decodedToken = jsonwebtoken_1.default.verify(token, process.env.SECRETORPRIVATEKEY || '');
+    const { uid } = decodedToken;
+    const user = yield usuario_1.default.findByPk(uid);
+    return user === null || user === void 0 ? void 0 : user.id;
+});
 const gets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const obj = yield bitacora_1.default.findAll();
-    res.json({ obj });
+    var _a;
+    const script = " SELECT * FROM bitacora INNER JOIN usuario ON bitacora.id_usuario = usuario.id INNER JOIN accion ON bitacora.id = accion.id_bitacora";
+    const obj = yield ((_a = bitacora_1.default.sequelize) === null || _a === void 0 ? void 0 : _a.query(script));
+    const data = obj === null || obj === void 0 ? void 0 : obj[0];
+    res.json({ data });
 });
 exports.gets = gets;
 const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

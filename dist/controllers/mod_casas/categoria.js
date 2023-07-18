@@ -14,8 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCategoriaState = exports.deleteCategoria = exports.putCategoria = exports.postCategoria = exports.getCategoria = exports.getCategorias = void 0;
 const categoria_1 = __importDefault(require("../../models/mod_casas/categoria"));
+const bitacora_1 = require("../mod_user/bitacora");
 const getCategorias = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categoria = yield categoria_1.default.findAll();
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Obtener los datos de todas las categorias'
+    });
     res.json({ categoria });
 });
 exports.getCategorias = getCategorias;
@@ -23,6 +28,10 @@ const getCategoria = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { id } = req.params;
     const categoria = yield categoria_1.default.findByPk(id);
     if (categoria) {
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Obtener los datos de una categoria'
+        });
         res.json({ categoria });
     }
     else {
@@ -37,6 +46,10 @@ const postCategoria = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const categoria = new categoria_1.default(body);
         yield categoria.save();
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Creacion de una categoria'
+        });
         res.json({
             msg: 'La categoria se creo correctamente',
             categoria
@@ -61,6 +74,10 @@ const putCategoria = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             });
         }
         yield categoria.update(body);
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Actualizar los datos de una categoria'
+        });
         res.json({
             msg: `La categoria con el id ${id} fue actualizado correctamente`,
             categoria
@@ -83,6 +100,10 @@ const deleteCategoria = (req, res) => __awaiter(void 0, void 0, void 0, function
         });
     }
     yield categoria.destroy();
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Eliminar permanentemente una categoria'
+    });
     res.json({
         msg: `La categoria con el id ${id} fue eliminado permanentemente con exito..!!!`,
         categoria
@@ -98,6 +119,10 @@ const deleteCategoriaState = (req, res) => __awaiter(void 0, void 0, void 0, fun
         });
     }
     yield categoria.update({ estado: false });
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Eliminar una categoria'
+    });
     res.json({
         msg: `La categoria con el id ${id} fue eliminado con exito..!!!`,
         categoria

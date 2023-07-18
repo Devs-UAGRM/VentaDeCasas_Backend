@@ -14,8 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletState = exports.delet = exports.put = exports.post = exports.get = exports.gets = void 0;
 const estadoTramite_1 = __importDefault(require("../../models/mod_tramite/estadoTramite"));
+const bitacora_1 = require("../mod_user/bitacora");
 const gets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const obj = yield estadoTramite_1.default.findAll();
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Obtener los datos del estado de todos los tramites'
+    });
     res.json({ obj });
 });
 exports.gets = gets;
@@ -23,6 +28,10 @@ const get = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const obj = yield estadoTramite_1.default.findByPk(id);
     if (obj) {
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Obtener los datos del estado de un tramite'
+        });
         res.json({ obj });
     }
     else {
@@ -37,6 +46,10 @@ const post = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const obj = new estadoTramite_1.default(body);
         yield obj.save();
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Creacion de un nuevo estado de un tramite'
+        });
         res.json({
             msg: 'El EstadoTramite se creo correctamente',
             obj
@@ -61,6 +74,10 @@ const put = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         yield obj.update(body);
+        yield (0, bitacora_1.saveBitacora)({
+            token: req.header('token'),
+            accion: 'Actualizacion del estado de un tramite'
+        });
         res.json({
             msg: `El EstadoTramite con el id ${id} fue actualizado correctamente`,
             obj
@@ -83,6 +100,10 @@ const delet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     yield obj.destroy();
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Eliminar los datos del estado de un tramite permanentemente'
+    });
     res.json({
         msg: `El EstadoTramite con el id ${id} fue eliminado permanentemente con exito..!!!`,
         obj
@@ -98,6 +119,10 @@ const deletState = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     yield obj.update({ estado: false });
+    yield (0, bitacora_1.saveBitacora)({
+        token: req.header('token'),
+        accion: 'Eliminar los datos del estado de un tramite'
+    });
     res.json({
         msg: `El EstadoTramite con el id ${id} fue eliminado con exito..!!!`,
         obj

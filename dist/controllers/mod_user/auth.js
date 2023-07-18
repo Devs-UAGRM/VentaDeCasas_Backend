@@ -16,6 +16,7 @@ exports.login = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const usuario_1 = __importDefault(require("../../models/mod_user/usuario"));
 const jwt_generate_1 = require("../../helpers/jwt-generate");
+const bitacora_1 = require("./bitacora");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { correo, password } = req.body;
     try {
@@ -49,6 +50,10 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         // Generar en JWT
         const token = yield (0, jwt_generate_1.JWTgenerate)(user.id.toString());
+        yield (0, bitacora_1.saveBitacora)({
+            token: token,
+            accion: 'Inicio de sesión'
+        });
         res.json({
             user,
             token,

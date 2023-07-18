@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 import Usuario from '../../models/mod_user/usuario';
 import { JWTgenerate } from '../../helpers/jwt-generate';
+import { saveBitacora } from './bitacora';
 
 const login = async (req: Request, res: Response): Promise<void> => {
   const { correo, password } = req.body;
@@ -10,11 +11,11 @@ const login = async (req: Request, res: Response): Promise<void> => {
   try {
     // Verificar si el email existe
     const user = await Usuario.findOne({
-        where: {
-          correo: correo
-        }
-      });
-      
+      where: {
+        correo: correo
+      }
+    });
+
     // const user = await Usuario.findOne({ correo });
     if (!user) {
       res.status(400).json({
@@ -42,7 +43,10 @@ const login = async (req: Request, res: Response): Promise<void> => {
 
     // Generar en JWT
     const token = await JWTgenerate(user.id.toString());
-
+    await saveBitacora({
+      token: token!,
+      accion: 'Inicio de sesión'
+    });
     res.json({
       user,
       token,
