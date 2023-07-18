@@ -8,7 +8,7 @@ const JWTgenerate = (uid: string = ''): Promise<string> => {
       payload,
       process.env.SECRETORPRIVATEKEY as string,
       {
-        expiresIn: '4h',
+        expiresIn: '48h',
       },
       (err, token) => {
         if (err) {
