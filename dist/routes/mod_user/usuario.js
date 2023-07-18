@@ -21,8 +21,18 @@ router.get('/:id', [
     validar_jwt_1.default,
     validar_campos_1.default
 ], usuario_1.get);
-router.post('/', [
+// Crear usuario desde adm | Esto si te requiere token
+router.post('/create', [
     validar_jwt_1.default,
+    (0, express_validator_1.check)('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    (0, express_validator_1.check)('password', 'El password debe de ser de mas 6 de caracteres').isLength({ min: 6 }),
+    (0, express_validator_1.check)('correo').custom(db_validators_1.isEmailExist),
+    validar_campos_1.default
+], usuario_1.post);
+// Crear usuario desde el market App -> Solo debo crear usuarios con el id_rol=1
+// Esto no te requiere token
+// En la biotacora añadir esta accion solamente como accion, sin registrar usuarios
+router.post('/', [
     (0, express_validator_1.check)('nombre', 'El nombre es obligatorio').not().isEmpty(),
     (0, express_validator_1.check)('password', 'El password debe de ser de mas 6 de caracteres').isLength({ min: 6 }),
     (0, express_validator_1.check)('correo').custom(db_validators_1.isEmailExist),
