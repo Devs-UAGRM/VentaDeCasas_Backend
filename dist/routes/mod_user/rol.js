@@ -13,18 +13,18 @@ const validar_rol_1 = require("../../middlewares/validar-rol");
 const router = (0, express_1.Router)();
 router.get('/', [
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    //  isAdminRole,
     validar_campos_1.default
 ], rol_1.gets);
 router.get('/:id', [
     (0, express_validator_1.check)('id').isInt().withMessage('El campo id debe ser un número entero'),
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     validar_campos_1.default
 ], rol_1.get);
 router.post('/', [
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     (0, express_validator_1.check)('rol', 'El rol es obligatorio').not().isEmpty(),
     (0, express_validator_1.check)('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
     validar_campos_1.default
@@ -32,7 +32,7 @@ router.post('/', [
 router.put('/:id', [
     (0, express_validator_1.check)('id').isInt().withMessage('El campo id debe ser un número entero'),
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     validar_campos_1.default
 ], rol_1.put);
 router.delete('/del/:id', [

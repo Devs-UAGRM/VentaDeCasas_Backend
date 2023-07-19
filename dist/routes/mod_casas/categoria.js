@@ -12,18 +12,18 @@ const express_validator_1 = require("express-validator");
 const router = (0, express_1.Router)();
 router.get('/', [
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     validar_campos_1.default
 ], categoria_1.getCategorias);
 router.get('/:id', [
     (0, express_validator_1.check)('id').isInt().withMessage('El campo id debe ser un número entero'),
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     validar_campos_1.default
 ], categoria_1.getCategoria);
 router.post('/', [
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     (0, express_validator_1.check)('categoria', 'La categoria es obligatorio').not().isEmpty(),
     (0, express_validator_1.check)('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
     validar_campos_1.default
@@ -31,7 +31,7 @@ router.post('/', [
 router.put('/:id', [
     (0, express_validator_1.check)('id').isInt().withMessage('El campo id debe ser un número entero'),
     validar_jwt_1.default,
-    validar_rol_1.isAdminRole,
+    // isAdminRole,
     validar_campos_1.default
 ], categoria_1.putCategoria);
 router.delete('/del/:id', [

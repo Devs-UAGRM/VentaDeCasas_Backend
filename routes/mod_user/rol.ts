@@ -1,62 +1,62 @@
 import { Router } from "express";
 import { check } from "express-validator";
 
-import { 
+import {
     get,
     gets,
     post,
     put,
     delet,
     deletState
- } from "../../controllers/mod_user/rol";
+} from "../../controllers/mod_user/rol";
 
 import validarCampos from "../../middlewares/validar-campos";
 import validarJWT from "../../middlewares/validar-jwt";
 import { isAdminRole } from "../../middlewares/validar-rol";
 // import { isRolForID, isRoleValue } from "../../helpers/db-validators";
 
- const router = Router();
+const router = Router();
 
- router.get('/',[
-     validarJWT,
-     isAdminRole,
-    validarCampos    
+router.get('/', [
+    validarJWT,
+    //  isAdminRole,
+    validarCampos
 ], gets);
 
-router.get('/:id',[
+router.get('/:id', [
     check('id').isInt().withMessage('El campo id debe ser un número entero'),
     validarJWT,
-    isAdminRole,
-   validarCampos    
+    // isAdminRole,
+    validarCampos
 ], get);
- 
- router.post('/',[
+
+router.post('/', [
     validarJWT,
-    isAdminRole,
+    // isAdminRole,
     check('rol', 'El rol es obligatorio').not().isEmpty(),
     check('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
-    validarCampos    
+    validarCampos
 ], post);
- 
- router.put('/:id',[
+
+router.put('/:id', [
     check('id').isInt().withMessage('El campo id debe ser un número entero'),
-     validarJWT,
-    isAdminRole,
-    validarCampos    
+    validarJWT,
+    // isAdminRole,
+    validarCampos
 ], put);
- 
- router.delete('/del/:id',[
-     check('id').isInt().withMessage('El campo id debe ser un número entero'),
-    validarJWT,
-    isAdminRole,
-    validarCampos    
-], delet);
- 
- router.delete('/:id',[
+
+router.delete('/del/:id', [
     check('id').isInt().withMessage('El campo id debe ser un número entero'),
     validarJWT,
     isAdminRole,
-    validarCampos    
+    validarCampos
+], delet);
+
+router.delete('/:id', [
+    check('id').isInt().withMessage('El campo id debe ser un número entero'),
+    validarJWT,
+    isAdminRole,
+    validarCampos
 ], deletState);
 
- export default router;
+export default router;
