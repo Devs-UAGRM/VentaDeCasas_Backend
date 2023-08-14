@@ -7,6 +7,7 @@ const port = 5432;
 const database = 'd7adg1n2jf2rqt';
 const typeDatabase = 'postgres';
 
+
 const url = `${typeDatabase}://${user}:${password}@${host}:${port}/${database}`;
 
 console.log(url);
